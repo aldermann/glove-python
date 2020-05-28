@@ -21,6 +21,7 @@ def define_extensions(cythonize=False):
     if 'anaconda' not in sys.version.lower():
         compile_args.append('-march=native')
 
+    set_gcc()
     if cythonize:
         glove_cython = "glove/glove_cython.pyx"
         glove_metrics = "glove/metrics/accuracy_cython.pyx"
@@ -79,7 +80,7 @@ class Cythonize(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        set_gcc()
 
     def finalize_options(self):
         pass
@@ -88,7 +89,7 @@ class Cythonize(Command):
 
         import Cython
         from Cython.Build import cythonize
-
+        
         cythonize(define_extensions(cythonize=True))
 
 
